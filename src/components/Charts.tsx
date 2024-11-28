@@ -4,12 +4,12 @@ import * as am5xy from "@amcharts/amcharts5/xy";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import * as am5percent from "@amcharts/amcharts5/percent";
 
-type DataItem = {
+export type DataItem = {
   category: string;
   [key: string]: string | number;
 };
 
-type pieDataType = {
+export type pieDataType = {
   country: string;
   sales: number;
 };
@@ -73,7 +73,7 @@ const MyChart = ({
           layout: root.verticalLayout,
         })
       );
-
+    
       // Create Y-Axis
       const yAxis = chart.yAxes.push(
         am5xy.ValueAxis.new(root, {
@@ -254,7 +254,7 @@ const MyChart = ({
     <div>
       <div
         ref={chartRef}
-        style={{ width: "700px", height: "500px", margin: "0 auto" }}
+        style={{ width: "500px", height: "500px" }}
       />
     </div>
   );
