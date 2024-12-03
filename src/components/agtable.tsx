@@ -6,9 +6,9 @@ import 'ag-grid-community/styles/ag-theme-material.css';
 import 'ag-grid-community/styles/ag-theme-balham.css'
 import { useState } from 'react';
 import { DataItem, pieDataType } from './Charts';
-
+import { User } from '@/lib/data';
 type AgTableProps = {
-  data:DataItem[] | pieDataType[],
+  data:DataItem[] | pieDataType[] | User[],
   pagination?:boolean,
   pageSize?:number,
   filtering?:boolean,

@@ -5,7 +5,22 @@ import {
 } from "@/components/ui/card"
 import MyChart, { DataItem, pieDataType } from "@/components/Charts"
 import AgTable from "@/components/agtable"
-const TabsComp = ({data,type}:{data:DataItem[] | pieDataType[],type:"pie"|"bar"}) => {
+import { User } from "@/lib/data"
+import { TooltipConfig } from "@/components/Charts"
+
+type tabsCompProps={
+  data:DataItem[] | pieDataType[] | User[],
+  category?:string
+  xAxisLabel?:string
+  yAxisLabel?:string
+  tooltipConfig?: TooltipConfig;
+
+  type:"pie"|"bar", 
+   seriesConfig?: { key: string; name: string }[]
+}
+
+
+const TabsComp = ({data,type,seriesConfig,category,xAxisLabel,yAxisLabel,tooltipConfig}:tabsCompProps) => {
   return (
     <div className="flex flex-col  justify-center items-center gap-5 py-20 bg-gray-50">
 
@@ -32,8 +47,11 @@ const TabsComp = ({data,type}:{data:DataItem[] | pieDataType[],type:"pie"|"bar"}
           <CardContent className="space-y-2">
           <MyChart type={type}  newdata={data} color={["#0A97B0","#0A5EB0"]} 
         rounded={true}  
-        xAxisLabel="Category" 
-        yAxisLabel="Sales" 
+        xAxisLabel={xAxisLabel}
+        yAxisLabel={yAxisLabel} 
+        seriesConfig={seriesConfig}
+        categoryXField={category}
+        tooltipConfig={tooltipConfig}
         legend={true}
         legendConfig={{fontSize: 15,legendText:"{name}  year"}} cursor={true} 
         />

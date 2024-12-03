@@ -1,4 +1,5 @@
 import TabsComp from "@/components/TabsComp";
+import { dummyJsonData } from "@/lib/data";
 
 
 
@@ -53,15 +54,19 @@ const TabsPage = () => {
 
       <div className="py-10 grid grid-cols-3 gap-10">
         <div>
-          <TabsComp type="bar" data={data2}/>
+          <TabsComp type="bar" category="category" xAxisLabel={"Category"} yAxisLabel={"Sales"} seriesConfig={[{key:"value1",name:"2023"},{key:"value2",name:'2024'}]} data={data2}/>
         </div>
         <div>
           <TabsComp type="pie" data={pieData2}/>
         </div>
     <div>
       
-    <TabsComp type="bar" data={data}/>
+    <TabsComp type="bar" category="category" xAxisLabel={"Category"} yAxisLabel={"Sales"} seriesConfig={[{key:"value1",name:"2023"},{key:"value2",name:'2024'}]} data={data}/>
 
+    </div>
+
+    <div>
+      <TabsComp type="bar"   data={dummyJsonData} seriesConfig={[{key:"age",name:"Age"},{key:"height",name:"Height"},{key:"weight",name:"Weight"}]} category="firstName" xAxisLabel={"FirstName"} yAxisLabel={"Details"} tooltipConfig={{label:"<h2>{name}:{valueY}</h2>"}}  />
     </div>
 
       </div>

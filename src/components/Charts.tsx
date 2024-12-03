@@ -3,7 +3,7 @@ import * as am5 from "@amcharts/amcharts5";
 import * as am5xy from "@amcharts/amcharts5/xy";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import * as am5percent from "@amcharts/amcharts5/percent";
-
+import { User } from "@/lib/data";
 export type DataItem = {
   category: string;
   [key: string]: string | number;
@@ -16,7 +16,7 @@ export type pieDataType = {
 
 type ChartsProp = {
   type: "bar" | "pie" | "donut";
-  newdata: DataItem[] | pieDataType[];
+  newdata: DataItem[] | pieDataType[] | User[];
   color: string[];
   rounded?: boolean;
   cursor?: boolean;
@@ -25,12 +25,13 @@ type ChartsProp = {
   xAxisLabel?: string;
   yAxisLabel?: string;
   seriesConfig?: { key: string; name: string }[];
+  categoryXField?:string
   gridlines?: boolean;
   legendConfig?: LegendConfig;
   tooltipConfig?: TooltipConfig;
 };
 
-type TooltipConfig = {
+export type TooltipConfig = {
   label: string;
   backgroundColor?: string;
   fontColor?: string;
@@ -50,11 +51,13 @@ const MyChart = ({
   legend,
   xAxisLabel,
   label,
+  categoryXField,
   yAxisLabel,
   seriesConfig = [
     { key: "value1", name: "Series 1" },
-    { key: "value2", name: "Series 2" },
+    //{ key: "value2", name: "Series 2" },
   ],
+
   gridlines = true,
   legendConfig = { fontSize: 16 },
   tooltipConfig = { label: "<h2>{category}: {valueY}</h2>" },
@@ -65,7 +68,7 @@ const MyChart = ({
   useLayoutEffect(() => {
     const root = am5.Root.new(chartRef.current);
     root.setThemes([am5themes_Animated.new(root)]);
-
+    
     if (type === "bar") {
       const chart = root.container.children.push(
         am5xy.XYChart.new(root, {
@@ -100,8 +103,10 @@ const MyChart = ({
         am5xy.CategoryAxis.new(root, {
           renderer: am5xy.AxisRendererX.new(root, {
             visible: gridlines,
+            minGridDistance: 30,
           }),
-          categoryField: "category",
+          categoryField: categoryXField as string
+
         })
       );
       xAxis.data.setAll(newdata);
@@ -110,7 +115,8 @@ const MyChart = ({
         xAxis.children.unshift(
           am5.Label.new(root, {
             text: xAxisLabel,
-            y: am5.percent(100),
+            x:am5.percent(-10),
+            y: am5.percent(70),
             centerX: am5.p50,
             centerY: am5.p50,
           })
@@ -125,7 +131,7 @@ const MyChart = ({
             xAxis: xAxis,
             yAxis: yAxis,
             valueYField: config.key,
-            categoryXField: "category",
+            categoryXField: categoryXField as string
           })
         );
 
